@@ -345,3 +345,257 @@ GET {{baseUrl}}/api/health
 ### 6. Verificar manejo de errores
 
 ###
+### ============================================
+### User API - Archivo de Pruebas HTTP
+### ============================================
+### Extensión requerida: REST Client (humao.rest-client)
+### ============================================
+
+### Variables de entorno
+@baseUrl = https://localhost:7278
+@baseUrlHttp = http://localhost:5167
+
+### ============================================
+### 1. USUARIOS - Gestión de usuarios
+### ============================================
+
+### Obtener todos los usuarios
+GET {{baseUrl}}/api/usuarios
+Accept: application/json
+
+###
+
+### Obtener usuario por ID (ID válido: 1-10)
+GET {{baseUrl}}/api/usuarios/1
+Accept: application/json
+
+###
+
+### Obtener usuario 2
+GET {{baseUrl}}/api/usuarios/2
+Accept: application/json
+
+###
+
+### Obtener usuario 5
+GET {{baseUrl}}/api/usuarios/5
+Accept: application/json
+
+###
+
+### ⚠️ Prueba de error - Usuario que no existe
+GET {{baseUrl}}/api/usuarios/999
+Accept: application/json
+
+###
+
+### ⚠️ Prueba de error - ID inválido
+GET {{baseUrl}}/api/usuarios/0
+Accept: application/json
+
+
+### ============================================
+### 2. POSTS - Gestión de publicaciones
+### ============================================
+
+### Obtener todos los posts
+GET {{baseUrl}}/api/posts
+Accept: application/json
+
+###
+
+### Obtener post por ID (ID válido: 1-100)
+GET {{baseUrl}}/api/posts/1
+Accept: application/json
+
+###
+
+### Obtener post 10
+GET {{baseUrl}}/api/posts/10
+Accept: application/json
+
+###
+
+### ⚠️ Prueba de error - Post que no existe
+GET {{baseUrl}}/api/posts/999
+Accept: application/json
+
+
+### ============================================
+### 3. POSTS POR USUARIO - Relación entre recursos
+### ============================================
+
+### Obtener posts del usuario 1
+GET {{baseUrl}}/api/usuarios/1/posts
+Accept: application/json
+
+###
+
+### Obtener posts del usuario 2
+GET {{baseUrl}}/api/usuarios/2/posts
+Accept: application/json
+
+###
+
+### Obtener posts del usuario 5
+GET {{baseUrl}}/api/usuarios/5/posts
+Accept: application/json
+
+###
+
+### ⚠️ Prueba de error - Usuario que no existe
+GET {{baseUrl}}/api/usuarios/999/posts
+Accept: application/json
+
+
+### ============================================
+### 4. PRUEBA DE CACHÉ - Secuencia completa
+### ============================================
+
+### Paso 1: Limpiar caché
+DELETE {{baseUrl}}/api/cache
+Accept: application/json
+
+###
+
+### Paso 2: Primera petición (fromCache: false)
+GET {{baseUrl}}/api/usuarios/1
+Accept: application/json
+
+###
+
+### Paso 3: Segunda petición inmediata (fromCache: true)
+GET {{baseUrl}}/api/usuarios/1
+Accept: application/json
+
+###
+
+### Paso 4: Verificar que el caché tiene datos
+GET {{baseUrl}}/api/health
+Accept: application/json
+
+
+### ============================================
+### 5. PRUEBAS DE RENDIMIENTO
+### ============================================
+
+### Petición 1 - Todos los usuarios
+GET {{baseUrl}}/api/usuarios
+
+###
+
+### Petición 2 - Todos los posts
+GET {{baseUrl}}/api/posts
+
+###
+
+### Petición 3 - Usuario específico
+GET {{baseUrl}}/api/usuarios/3
+
+###
+
+### Petición 4 - Posts de usuario
+GET {{baseUrl}}/api/usuarios/3/posts
+
+###
+
+### Petición 5 - Post específico
+GET {{baseUrl}}/api/posts/15
+
+
+### ============================================
+### 6. SECUENCIA DE PRUEBA COMPLETA
+### ============================================
+
+### 1. Health check
+GET {{baseUrl}}/api/health
+
+###
+
+### 2. Limpiar caché
+DELETE {{baseUrl}}/api/cache
+
+###
+
+### 3. Obtener todos los usuarios (sin caché)
+GET {{baseUrl}}/api/usuarios
+
+###
+
+### 4. Obtener todos los usuarios (con caché)
+GET {{baseUrl}}/api/usuarios
+
+###
+
+### 5. Obtener usuario específico
+GET {{baseUrl}}/api/usuarios/1
+
+###
+
+### 6. Obtener posts del usuario
+GET {{baseUrl}}/api/usuarios/1/posts
+
+###
+
+### 7. Obtener todos los posts
+GET {{baseUrl}}/api/posts
+
+###
+
+### 8. Verificar caché final
+GET {{baseUrl}}/api/health
+
+
+### ============================================
+### 7. PRUEBAS CON HTTP (sin SSL)
+### ============================================
+
+### Usuarios - HTTP
+GET {{baseUrlHttp}}/api/usuarios
+Accept: application/json
+
+###
+
+### Usuario específico - HTTP
+GET {{baseUrlHttp}}/api/usuarios/1
+Accept: application/json
+
+###
+
+### Posts - HTTP
+GET {{baseUrlHttp}}/api/posts
+Accept: application/json
+
+
+### ============================================
+### NOTAS Y TIPS
+### ============================================
+
+### 📝 Notas importantes:
+### 
+### • Asegúrate de tener la API corriendo antes de ejecutar las peticiones
+### • La primera vez que consultes será más lento (llama a JSONPlaceholder)
+### • Las siguientes peticiones serán instantáneas (caché)
+### • El caché expira después de 10 minutos
+### • JSONPlaceholder tiene 10 usuarios y 100 posts
+### 
+### 🔧 Comandos útiles:
+### • dotnet run - Ejecutar la API
+### • dotnet watch run - Ejecutar con hot reload
+### 
+### 📊 Códigos de respuesta esperados:
+### • 200 OK - Petición exitosa
+### • 400 Bad Request - ID inválido
+### • 404 Not Found - Recurso no encontrado
+### • 500 Internal Server Error - Error en la API externa
+### 
+### 🎯 Endpoints disponibles:
+### • GET /api/usuarios - Lista todos los usuarios
+### • GET /api/usuarios/{id} - Obtiene un usuario
+### • GET /api/posts - Lista todos los posts
+### • GET /api/posts/{id} - Obtiene un post
+### • GET /api/usuarios/{userId}/posts - Posts de un usuario
+### • GET /api/health - Estado de la API
+### • DELETE /api/cache - Limpiar caché
+
+###
