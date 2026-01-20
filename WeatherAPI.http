@@ -1,0 +1,347 @@
+### ============================================
+### Weather API - Archivo de Pruebas HTTP
+### ============================================
+### Extensión requerida: REST Client (humao.rest-client)
+### 
+### Instrucciones:
+### 1. Asegúrate de que la API esté corriendo (dotnet run)
+### 2. Haz clic en "Send Request" sobre cada petición
+### 3. Los resultados aparecerán en una pestaña nueva
+### ============================================
+
+### Variables de entorno
+@baseUrl = https://localhost:7001
+@baseUrlHttp = http://localhost:5001
+
+### ============================================
+### 1. HEALTH CHECK - Verificar que la API está activa
+### ============================================
+
+### Health Check (HTTPS)
+GET {{baseUrl}}/api/health
+Accept: application/json
+
+###
+
+### Health Check (HTTP)
+GET {{baseUrlHttp}}/api/health
+Accept: application/json
+
+
+### ============================================
+### 2. CLIMA ACTUAL - Obtener clima de una ciudad
+### ============================================
+
+### Obtener clima de Madrid
+GET {{baseUrl}}/api/clima/madrid
+Accept: application/json
+
+###
+
+### Obtener clima de Barcelona
+GET {{baseUrl}}/api/clima/barcelona
+Accept: application/json
+
+###
+
+### Obtener clima de Valencia
+GET {{baseUrl}}/api/clima/valencia
+Accept: application/json
+
+###
+
+### Obtener clima de Sevilla
+GET {{baseUrl}}/api/clima/sevilla
+Accept: application/json
+
+###
+
+### Obtener clima de Londres
+GET {{baseUrl}}/api/clima/london
+Accept: application/json
+
+###
+
+### Obtener clima de Nueva York
+GET {{baseUrl}}/api/clima/new york
+Accept: application/json
+
+###
+
+### Obtener clima de Tokio
+GET {{baseUrl}}/api/clima/tokyo
+Accept: application/json
+
+###
+
+### ⚠️ Prueba de error - Ciudad que no existe
+GET {{baseUrl}}/api/clima/ciudadinexistente123456
+Accept: application/json
+
+
+### ============================================
+### 3. PRONÓSTICO - Obtener pronóstico de varios días
+### ============================================
+
+### Pronóstico de Madrid
+GET {{baseUrl}}/api/pronostico/madrid
+Accept: application/json
+
+###
+
+### Pronóstico de Barcelona
+GET {{baseUrl}}/api/pronostico/barcelona
+Accept: application/json
+
+###
+
+### Pronóstico de París
+GET {{baseUrl}}/api/pronostico/paris
+Accept: application/json
+
+###
+
+### Pronóstico de Berlín
+GET {{baseUrl}}/api/pronostico/berlin
+Accept: application/json
+
+
+### ============================================
+### 4. COMPARAR CIUDADES - Comparar clima entre varias ciudades
+### ============================================
+
+### Comparar ciudades españolas
+POST {{baseUrl}}/api/comparar
+Content-Type: application/json
+
+{
+  "ciudades": ["Madrid", "Barcelona", "Valencia", "Sevilla"]
+}
+
+###
+
+### Comparar capitales europeas
+POST {{baseUrl}}/api/comparar
+Content-Type: application/json
+
+{
+  "ciudades": ["London", "Paris", "Berlin", "Rome"]
+}
+
+###
+
+### Comparar ciudades de América
+POST {{baseUrl}}/api/comparar
+Content-Type: application/json
+
+{
+  "ciudades": ["New York", "Los Angeles", "Mexico City"]
+}
+
+###
+
+### Comparar ciudades asiáticas
+POST {{baseUrl}}/api/comparar
+Content-Type: application/json
+
+{
+  "ciudades": ["Tokyo", "Seoul", "Bangkok", "Singapore"]
+}
+
+###
+
+### ⚠️ Prueba de error - Solo una ciudad (mínimo 2)
+POST {{baseUrl}}/api/comparar
+Content-Type: application/json
+
+{
+  "ciudades": ["Madrid"]
+}
+
+###
+
+### ⚠️ Prueba de error - Array vacío
+POST {{baseUrl}}/api/comparar
+Content-Type: application/json
+
+{
+  "ciudades": []
+}
+
+###
+
+### ⚠️ Prueba de error - Sin campo ciudades
+POST {{baseUrl}}/api/comparar
+Content-Type: application/json
+
+{
+  "otras": ["Madrid", "Barcelona"]
+}
+
+
+### ============================================
+### 5. GESTIÓN DE CACHÉ
+### ============================================
+
+### Limpiar todo el caché
+DELETE {{baseUrl}}/api/cache
+Accept: application/json
+
+###
+
+### Verificar tamaño del caché después de limpiarlo
+GET {{baseUrl}}/api/health
+Accept: application/json
+
+
+### ============================================
+### 6. PRUEBA DE CACHÉ - Secuencia completa
+### ============================================
+
+### Paso 1: Limpiar caché primero
+DELETE {{baseUrl}}/api/cache
+
+###
+
+### Paso 2: Primera petición (fromCache: false - llamada a API externa)
+GET {{baseUrl}}/api/clima/madrid
+Accept: application/json
+
+###
+
+### Paso 3: Segunda petición inmediata (fromCache: true - desde caché)
+GET {{baseUrl}}/api/clima/madrid
+Accept: application/json
+
+###
+
+### Paso 4: Verificar que el caché tiene datos
+GET {{baseUrl}}/api/health
+Accept: application/json
+
+
+### ============================================
+### 7. PRUEBAS DE RENDIMIENTO - Múltiples peticiones
+### ============================================
+
+### Petición 1
+GET {{baseUrl}}/api/clima/madrid
+
+###
+
+### Petición 2
+GET {{baseUrl}}/api/clima/barcelona
+
+###
+
+### Petición 3
+GET {{baseUrl}}/api/clima/valencia
+
+###
+
+### Petición 4
+GET {{baseUrl}}/api/clima/sevilla
+
+###
+
+### Petición 5
+GET {{baseUrl}}/api/clima/bilbao
+
+
+### ============================================
+### 8. PRUEBAS CON DIFERENTES IDIOMAS Y FORMATOS
+### ============================================
+
+### Ciudades con caracteres especiales
+GET {{baseUrl}}/api/clima/münchen
+Accept: application/json
+
+###
+
+### Ciudades con espacios
+GET {{baseUrl}}/api/clima/buenos aires
+Accept: application/json
+
+###
+
+### Ciudades con acentos
+GET {{baseUrl}}/api/clima/bogotá
+Accept: application/json
+
+
+### ============================================
+### 9. SECUENCIA DE PRUEBA COMPLETA
+### ============================================
+
+### 1. Health check
+GET {{baseUrl}}/api/health
+
+###
+
+### 2. Limpiar caché
+DELETE {{baseUrl}}/api/cache
+
+###
+
+### 3. Obtener clima (sin caché)
+GET {{baseUrl}}/api/clima/madrid
+
+###
+
+### 4. Obtener clima (con caché)
+GET {{baseUrl}}/api/clima/madrid
+
+###
+
+### 5. Obtener pronóstico
+GET {{baseUrl}}/api/pronostico/madrid
+
+###
+
+### 6. Comparar ciudades
+POST {{baseUrl}}/api/comparar
+Content-Type: application/json
+
+{
+  "ciudades": ["Madrid", "Barcelona", "Valencia"]
+}
+
+###
+
+### 7. Verificar caché final
+GET {{baseUrl}}/api/health
+
+
+### ============================================
+### 10. NOTAS Y TIPS
+### ============================================
+
+### 📝 Notas importantes:
+### 
+### • Asegúrate de tener la API corriendo antes de ejecutar las peticiones
+### • La primera vez que consultes una ciudad será más lento (llama a la API externa)
+### • Las siguientes peticiones a la misma ciudad serán instantáneas (caché)
+### • El caché expira después de 10 minutos
+### • Puedes ejecutar múltiples peticiones seguidas con Ctrl+Alt+R (Windows/Linux)
+### • En Mac usa Cmd+Alt+R
+### 
+### 🔧 Comandos útiles:
+### • dotnet run - Ejecutar la API
+### • dotnet watch run - Ejecutar con hot reload
+### • dotnet build - Compilar el proyecto
+### 
+### 📊 Códigos de respuesta esperados:
+### • 200 OK - Petición exitosa
+### • 400 Bad Request - Datos inválidos
+### • 404 Not Found - Ciudad no encontrada
+### • 500 Internal Server Error - Error en la API externa
+### 
+### 🎯 Pruebas recomendadas:
+### 1. Ejecutar health check primero
+### 2. Limpiar caché
+### 3. Hacer petición y ver fromCache: false
+### 4. Repetir petición y ver fromCache: true
+### 5. Probar comparación de ciudades
+### 6. Verificar manejo de errores
+
+###
