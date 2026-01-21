@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HitTwHOXuu8=",
+  "dgSpecHash": "fEsSeYAWk6Y=",
   "success": true,
-  "projectFilePath": "d:\\Quique-2DAW\\RETO\\VibeCoding\\WeatherAPI.csproj",
+  "projectFilePath": "d:\\Quique-2DAW\\RETO\\VibeCoding\\VibeCoding\\WeatherAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\S2-PC00\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.0\\microsoft.aspnetcore.openapi.8.0.0.nupkg.sha512",
     "C:\\Users\\S2-PC00\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

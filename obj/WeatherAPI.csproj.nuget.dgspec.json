@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Quique-2DAW\\RETO\\VibeCoding\\WeatherAPI.csproj": {}
+    "d:\\Quique-2DAW\\RETO\\VibeCoding\\VibeCoding\\WeatherAPI.csproj": {}
   },
   "projects": {
-    "d:\\Quique-2DAW\\RETO\\VibeCoding\\WeatherAPI.csproj": {
+    "d:\\Quique-2DAW\\RETO\\VibeCoding\\VibeCoding\\WeatherAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Quique-2DAW\\RETO\\VibeCoding\\WeatherAPI.csproj",
+        "projectUniqueName": "d:\\Quique-2DAW\\RETO\\VibeCoding\\VibeCoding\\WeatherAPI.csproj",
         "projectName": "WeatherAPI",
-        "projectPath": "d:\\Quique-2DAW\\RETO\\VibeCoding\\WeatherAPI.csproj",
+        "projectPath": "d:\\Quique-2DAW\\RETO\\VibeCoding\\VibeCoding\\WeatherAPI.csproj",
         "packagesPath": "C:\\Users\\S2-PC00\\.nuget\\packages\\",
-        "outputPath": "d:\\Quique-2DAW\\RETO\\VibeCoding\\obj\\",
+        "outputPath": "d:\\Quique-2DAW\\RETO\\VibeCoding\\VibeCoding\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
